@@ -7,15 +7,22 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import hu.bme.aut.android.chat_app.databinding.ActivityLoginBinding
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlin.reflect.KClass
 
 
 class LoginActivity: AppCompatActivity(){
+    private lateinit var binding: ActivityLoginBinding
+
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+      //  setContentView(R.layout.activity_login)
+
+       binding = ActivityLoginBinding.inflate(layoutInflater)
+       setContentView(binding.root)
+
         val snackText=intent.getStringExtra("SnackBarRegisterText")
         if (snackText != null) {
             Snackbar.make(findViewById(android.R.id.content),snackText,Snackbar.LENGTH_LONG)
@@ -25,14 +32,11 @@ class LoginActivity: AppCompatActivity(){
         }
 
 
-        button_ok.background.alpha = 170
-        button_register.background.alpha = 100
+        binding.buttonOk.background.alpha = 170
+        binding.buttonRegister.background.alpha = 100
 
-        button_register.setOnClickListener(View.OnClickListener { openRegisterActivity() })
-        button_ok.setOnClickListener(View.OnClickListener { openMessagesActivity() })
-
-
-
+        binding.buttonRegister.setOnClickListener(View.OnClickListener { openRegisterActivity() })
+        binding.buttonOk.setOnClickListener(View.OnClickListener { openMessagesActivity() })
     }
     private fun openRegisterActivity(){
         val intent = Intent(this, RegisterActivity::class.java)
@@ -48,13 +52,13 @@ class LoginActivity: AppCompatActivity(){
     }
 
     private fun ValidateLogin(): Boolean{
-        if(editTextLoginName.text.toString().isEmpty()){
+        if(binding.editTextLoginName.text.toString().isEmpty()){
            Snackbar.make(findViewById(android.R.id.content),"User Name is reqiured",Snackbar.LENGTH_LONG)
                 .setBackgroundTint(Color.RED)
                 .show()
             return false
         }
-        if( editTextLoginPassword.text.toString().isEmpty()){
+        if( binding.editTextLoginPassword.text.toString().isEmpty()){
              Snackbar.make(findViewById(android.R.id.content),"Password is required",Snackbar.LENGTH_LONG)
                 .setBackgroundTint(Color.RED)
                 .show()

@@ -7,32 +7,37 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import hu.bme.aut.android.chat_app.databinding.ActivityRegisterBinding
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity: AppCompatActivity() {
+
+    private lateinit var binding: ActivityRegisterBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        button_register_ok.setOnClickListener(View.OnClickListener { Registration() })
+        binding.buttonRegisterOk.setOnClickListener(View.OnClickListener { Registration() })
     }
 
     private fun ValidateRegistration(): Boolean{
 
-        if(editTextUserName.text.toString().isEmpty()){
+        if(binding.editTextUserName.text.toString().isEmpty()){
             Snackbar.make(findViewById(android.R.id.content),"User Name is reqiured", Snackbar.LENGTH_LONG)
                 .setBackgroundTint(Color.RED)
                 .show()
             return false
         }
-        if( editTextPassword.text.toString().isEmpty()){
+        if( binding.editTextPassword.text.toString().isEmpty()){
             Snackbar.make(findViewById(android.R.id.content),"Password is required", Snackbar.LENGTH_LONG)
                 .setBackgroundTint(Color.RED)
                 .show()
             return false
         }
-        if(editTextPassword2.text.toString() != editTextPassword.text.toString()){
+        if(binding.editTextPassword2.text.toString() != binding.editTextPassword.text.toString()){
             Snackbar.make(findViewById(android.R.id.content),"Password confirmation failed",
                 Snackbar.LENGTH_LONG)
                 .setBackgroundTint(Color.RED)
